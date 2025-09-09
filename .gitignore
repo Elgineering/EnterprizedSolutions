@@ -1,0 +1,152 @@
+# ----------------------
+# OS / Editor junk
+# ----------------------
+.DS_Store
+Thumbs.db
+.idea/               # JetBrains project files (we'll whitelist .run below)
+*.iml
+*.ipr
+*.iws
+
+# Keep shared JetBrains run configs
+!.idea/.gitignore
+!.run/
+
+# ----------------------
+# Node / TypeScript
+# ----------------------
+node_modules/
+dist/
+build/
+coverage/
+.nyc_output/
+*.tsbuildinfo
+.pnp.*                 # Yarn PnP
+.pnpm-store/
+.eslintcache
+.tmp/
+.cache/
+.next/
+.storybook-out/
+
+# Package managers
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Env & local config (NEVER commit secrets)
+.env
+.env.*.local
+.env.local
+*.env.local
+*.secret
+secrets/*.json
+secrets/*.yaml
+!/.env.example
+
+# ----------------------
+# React Native (Android)
+# ----------------------
+apps/mobile/android/.gradle/
+apps/mobile/android/.idea/
+apps/mobile/android/local.properties
+apps/mobile/android/.cxx/
+apps/mobile/android/app/build/
+apps/mobile/android/build/
+**/*.keystore
+**/keystores/**
+
+# React Native (iOS)
+apps/mobile/ios/DerivedData/
+apps/mobile/ios/build/
+apps/mobile/ios/*.xcworkspace
+apps/mobile/ios/Pods/
+apps/mobile/ios/Podfile.lock # <-- If you prefer committing Pods, remove this ignore and unignore Pods
+# If committing Pods:
+# !apps/mobile/ios/Pods/
+# !apps/mobile/ios/Podfile.lock
+
+# Metro / RN caches
+apps/mobile/.expo/
+apps/mobile/.expo-shared/
+apps/mobile/.bundle
+apps/mobile/.watchmanconfig
+
+# ----------------------
+# NestJS / API
+# ----------------------
+apps/api/.webpack/
+apps/api/.tsbuildinfo
+apps/api/dist/
+
+# ----------------------
+# Apollo Router
+# ----------------------
+apps/router/.router-cache/
+apps/router/.supergraph/
+apps/router/build/
+apps/router/tmp/
+apps/router/supergraph.graphql  # if generated in CI; commit only if it's your source of truth
+
+# ----------------------
+# GraphQL Codegen
+# ----------------------
+**/__generated__/
+**/generated/
+graphql.schema.json
+
+# ----------------------
+# C# / .NET / Visual Studio / Rider
+# ----------------------
+**/bin/
+**/obj/
+**/out/
+**/.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.vscode/
+# NuGet
+**/packages/
+# Rider
+.idea/.idea.*
+*.DotSettings.user
+
+# ----------------------
+# Databases / Migrations
+# ----------------------
+db/**/tmp/
+db/**/node_modules/
+db/**/pgdata/
+*.sqlite
+*.db
+*.db-journal
+
+# ----------------------
+# Docker
+# ----------------------
+**/.docker/
+**/.dockerignore-local
+**/Dockerfile.local
+**/docker-compose.override.yml
+**/docker-compose.local.yml
+**/.env.docker
+**/.env.docker.local
+
+# ----------------------
+# Logs
+# ----------------------
+logs/
+*.log
+*.pid
+*.seed
+*.pid.lock
+
+# ----------------------
+# Coverage / Reports / Artifacts
+# ----------------------
+coverage/
+reports/
+artifacts/

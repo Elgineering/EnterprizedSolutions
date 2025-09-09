@@ -1,0 +1,50 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title High-Level Infrastructure Architecture (C4 Container Diagram)
+
+Person(user, "End User", "Interacts via web or mobile")
+System_Boundary(app, "Enterprise Application") {
+
+  Container(web, "React Web App", "React", "Web-based user interface")
+  Container(mobile, "React Native App", "React Native", "Mobile-based user interface")
+
+  Container_Boundary(api, "API Layer") {
+    Container(router, "Apollo Router", "GraphQL Federation Gateway", "Orchestrates GraphQL requests")
+    Container(nest, "NestJS Services", "Node.js / TypeScript", "Provides domain APIs via GraphQL/REST")
+    Container(csharp, "C# Services", "C#", "Legacy & enterprise integration services")
+  }
+
+  Container(config, "Configuration Service", "App Config / Key Vault", "Centralized dynamic configs & secrets")
+  Container(logging, "Logging Service", "ELK/Datadog", "Centralized structured logs & audit trails")
+  Container(security, "Security Service", "Auth0", "Authentication & Authorization (RBAC)")
+  Container(messaging, "Messaging Service Bus", "Kafka / Azure Service Bus", "Async events and domain messaging")
+  Container(encryption, "Encryption Service", "KMS/Key Vault", "Manages data encryption keys")
+
+  Container_Boundary(data, "Data Layer") {
+    ContainerDb(ods, "Operational Data Store", "ODS (e.g. NoSQL)", "Supports operational queries & event sourcing")
+    ContainerDb(rds, "Relational Database Service", "RDS (e.g. PostgreSQL/SQL Server)", "Transactional persistence and reporting")
+  }
+}
+
+Rel(user, web, "Uses")
+Rel(user, mobile, "Uses")
+Rel(web, router, "GraphQL Queries/Mutations")
+Rel(mobile, router, "GraphQL Queries/Mutations")
+
+Rel(router, nest, "Delegates federated queries")
+Rel(nest, csharp, "Integrates via REST/Message Bus")
+Rel(nest, ods, "Reads/Writes operational data")
+Rel(nest, rds, "Reads/Writes relational data")
+
+Rel(nest, config, "Loads configuration/secrets")
+Rel(nest, logging, "Writes logs/events")
+Rel(nest, security, "Validates JWTs")
+Rel(nest, messaging, "Publishes/Consumes events")
+Rel(csharp, messaging, "Publishes/Consumes events")
+
+Rel(config, encryption, "Encrypts secrets/values")
+Rel(ods, encryption, "Field/Data encryption")
+Rel(rds, encryption, "Field/Data encryption")
+
+@enduml

@@ -1,0 +1,49 @@
+@startuml
+title High-Level Deployment Diagram
+
+node "Cloud Environment" {
+
+  node "Kubernetes Cluster" {
+    artifact "React Web App" as web
+    artifact "React Native App" as mobile
+
+    node "API Layer" {
+      artifact "Apollo Router" as router
+      artifact "NestJS Services" as nest
+      artifact "C# Services" as csharp
+    }
+
+    node "Cross-Cutting Services" {
+      artifact "Configuration Service" as config
+      artifact "Logging Agent" as logging
+      artifact "Security (Auth0 SDKs)" as security
+      artifact "Messaging Client" as messaging
+      artifact "Encryption Client" as encryption
+    }
+  }
+
+  node "Cloud Services" {
+    database "Operational Data Store (ODS)" as ods
+    database "Relational Database Service (RDS)" as rds
+    artifact "Auth0 (IdP)" as auth0
+    artifact "Azure Key Vault" as kv
+    artifact "Azure App Config" as appconfig
+    artifact "Message Bus (Kafka / Azure Service Bus)" as bus
+    artifact "Centralized Logging (ELK / Datadog / Azure Monitor)" as logstore
+  }
+}
+
+web --> router : GraphQL
+mobile --> router : GraphQL
+router --> nest
+nest --> csharp : REST/Async
+nest --> ods
+nest --> rds
+nest --> bus
+csharp --> bus
+nest --> logstore
+nest --> kv
+nest --> appconfig
+nest --> auth0
+
+@enduml

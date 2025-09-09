@@ -1,0 +1,46 @@
+@startuml
+' Use the recommended include order to ensure all macros are available
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4.puml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Deployment.puml
+
+title C4 Deployment Diagram for Enterprized Solution
+
+DeploymentNode(cloud, "Cloud Environment", "Azure/AWS/GCP") {
+  DeploymentNode(cluster, "Kubernetes Cluster", "K8s") {
+    ContainerInstance(web, "React Web App", "Docker/NGINX", "Deployed as container in K8s")
+    ContainerInstance(mobile, "React Native App", "Mobile Build", "Deployed to App Stores / Devices")
+    DeploymentNode(api, "API Layer", "Docker Containers") {
+      ContainerInstance(router, "Apollo Router", "Node.js", "Federated GraphQL Gateway")
+      ContainerInstance(nest, "NestJS Services", "Node.js", "Domain APIs")
+      ContainerInstance(csharp, "C# Services", ".NET Core", "Legacy integrations")
+    }
+    DeploymentNode(agents, "Sidecars / Agents") {
+      ContainerInstance(loggingAgent, "Logging Agent", "FluentBit/Sidecar", "Forwards structured logs")
+      ContainerInstance(configAgent, "Config Agent", "SDK/Sidecar", "Loads secrets/configs dynamically")
+    }
+  }
+  DeploymentNode(cloudsvc, "Cloud Services", "Managed Services") {
+    ContainerInstance(auth0, "Auth0", "IdP", "Authentication & RBAC")
+    ContainerInstance(kv, "Key Vault", "Secrets Store", "Manages encryption keys & secrets")
+    ContainerInstance(appconfig, "App Config", "Configuration Service", "Dynamic configuration")
+    ContainerInstance(bus, "Message Bus", "Kafka/Service Bus", "Async messaging and events")
+    ContainerInstance(logstore, "Centralized Logging", "ELK/Datadog/Azure Monitor", "Stores logs & metrics")
+    ContainerInstance(ods, "ODS", "NoSQL/ODS", "Operational data store")
+    ContainerInstance(rds, "RDS", "Postgres/SQL Server", "Transactional data store")
+  }
+}
+
+Rel(web, router, "GraphQL Queries")
+Rel(mobile, router, "GraphQL Queries")
+Rel(router, nest, "Delegates Queries")
+Rel(nest, csharp, "Calls via REST/Async")
+Rel(nest, ods, "Operational Data")
+Rel(nest, rds, "Transactional Data")
+Rel(nest, bus, "Publishes/Consumes Events")
+Rel(csharp, bus, "Publishes/Consumes Events")
+Rel(loggingAgent, logstore, "Forwards Logs")
+Rel(configAgent, kv, "Fetches Secrets")
+Rel(configAgent, appconfig, "Loads Configs")
+Rel(router, auth0, "Validates JWT")
+
+@enduml
