@@ -147,6 +147,5 @@ logs/
 # ----------------------
 # Coverage / Reports / Artifacts
 # ----------------------
-coverage/
 reports/
 artifacts/
