@@ -2,7 +2,7 @@
 
 **Scope**: GitHub repos, branches, CI/CD, DNS, TLS, AWS accounts & resources, observability, secrets, and auth.  
 **Org code**: `eee` (Elgineering)  
-**App code**: `ent` (Enterprized Solutions)  
+**App code**: `ezs` (EnterpriZed Solutions)  
 **Environments**:
 - `UNT` (local unit testing)
 - `DVT` (development test)
@@ -14,10 +14,10 @@
 ## 1. Variables & Tokens
 
 - `{org}` → `eee`
-- `{app}` → `ent`
+- `{app}` → `ezs`
 - `{env}` → `unt`, `dvt`, `sit`, `prp`
 - `{ENV}` → uppercase `UNT`, `DVT`, `SIT`, `PRP` (for tags)
-- `{region}` → region short code (`use1` = `us-east-1`)
+- `{region}` → region short code (`use2` = `us-east-2`)
 - `{svc}` → bounded context / service (`router`, `usersvc`, `billingsvc`)
 - `{comp}` → infra component (`vpc`, `alb`, `cf`, `rds`, etc.)
 - `{seq}` → optional numeric suffix
@@ -34,7 +34,7 @@
 - `EEE-Enterprized-SIT` → Staging / Integration
 - `EEE-Enterprized-PRP` → Primary Production
 - Route 53 Public Zone → `elgineering.com`
-- Route 53 Private Zone (optional) → `svc.elg`
+- Route 53 Private Zone (optional) → `svc.eee`
 
 ---
 
@@ -52,73 +52,73 @@
 
 ## 4. S3 and CloudFront
 
-- SPA Bucket: `eee-ent-spa-{env}-{region}`
-- Assets Bucket: `eee-ent-assets-{env}-{region}`
-- CloudFront Distribution Name: `eee-ent-cf-spa-{env}-{region}`
-- Logs Bucket: `eee-ent-logs-{env}-{region}`
+- SPA Bucket: `eee-ezs-spa-{env}-{region}`
+- Assets Bucket: `eee-ezs-assets-{env}-{region}`
+- CloudFront Distribution Name: `eee-ezs-cf-spa-{env}-{region}`
+- Logs Bucket: `eee-ezs-logs-{env}-{region}`
 
 ---
 
 ## 5. Networking & Load Balancers
 
-- VPC: `eee-ent-vpc-{env}-{region}`
-- Subnet: `eee-ent-subnet-{tier}-{az}-{env}-{region}`
-- Internet Gateway: `eee-ent-igw-{env}-{region}`
-- NAT Gateway: `eee-ent-natgw-{az}-{env}-{region}`
-- Route Table: `eee-ent-rtb-{tier}-{env}-{region}`
+- VPC: `eee-ezs-vpc-{env}-{region}`
+- Subnet: `eee-ezs-subnet-{tier}-{az}-{env}-{region}`
+- Internet Gateway: `eee-ezs-igw-{env}-{region}`
+- NAT Gateway: `eee-ezs-natgw-{az}-{env}-{region}`
+- Route Table: `eee-ezs-rtb-{tier}-{env}-{region}`
 - Security Groups:
-    - ALB: `eee-ent-sg-alb-{env}`
-    - App: `eee-ent-sg-app-{env}`
-    - DB: `eee-ent-sg-db-{env}`
-- Public ALB (API): `eee-ent-alb-api-{env}-{region}`
-- Internal ALB/NLB: `eee-ent-alb-int-{env}-{region}`
-- Target Group: `eee-ent-tg-{comp}-{env}`
-- WAF: `eee-ent-waf-{env}`
+    - ALB: `eee-ezs-sg-alb-{env}`
+    - App: `eee-ezs-sg-app-{env}`
+    - DB: `eee-ezs-sg-db-{env}`
+- Public ALB (API): `eee-ezs-alb-api-{env}-{region}`
+- Internal ALB/NLB: `eee-ezs-alb-int-{env}-{region}`
+- Target Group: `eee-ezs-tg-{comp}-{env}`
+- WAF: `eee-ezs-waf-{env}`
 
 ---
 
 ## 6. Compute (ECS, ECR, App Runner)
 
-- ECS Cluster: `eee-ent-ecs-{env}-{region}`
-- ECS Service (Router): `eee-ent-svc-router-{env}`
-- ECS Service (per context): `eee-ent-svc-{svc}-{env}`
-- Task Definition: `eee-ent-task-{svc}-{env}`
-- ECR Repository: `eee/ent/{svc}`
+- ECS Cluster: `eee-ezs-ecs-{env}-{region}`
+- ECS Service (Router): `eee-ezs-svc-router-{env}`
+- ECS Service (per context): `eee-ezs-svc-{svc}-{env}`
+- Task Definition: `eee-ezs-task-{svc}-{env}`
+- ECR Repository: `eee/ezs/{svc}`
 - ECR Tag: `{gitsha}-{env}`
-- App Runner Service: `eee-ent-ar-{svc}-{env}`
+- App Runner Service: `eee-ezs-ar-{svc}-{env}`
 
 ---
 
 ## 7. Data Stores & Migrations
 
-- RDS Instance: `eee-ent-rds-core-{env}-{region}`
-- RDS ODS/Replica: `eee-ent-rds-ods-{env}-{region}`
-- RDS DB Name: `ent_core_{env}`
-- Cache: `eee-ent-cache-{env}-{region}`
-- Migration Runner: `eee-ent-migrator-{env}`
+- RDS Instance: `eee-ezs-rds-core-{env}-{region}`
+- RDS ODS/Replica: `eee-ezs-rds-ods-{env}-{region}`
+- RDS DB Name: `ezs_core_{env}`
+- Cache: `eee-ezs-cache-{env}-{region}`
+- Migration Runner: `eee-ezs-migrator-{env}`
 - Migration File: `db/migrations/{env}/YYYYMMDDHHMM__desc.sql`
-- Schema History: `schema_history_ent_{env}`
+- Schema History: `schema_history_ezs_{env}`
 
 ---
 
 ## 8. Secrets & Parameters
 
-- Secrets Manager (DB): `eee/ent/db/core/{env}`
-- Secrets Manager (Auth0): `eee/ent/auth0/{client}/{env}`
-- External API Secret: `eee/ent/ext/{system}/{env}`
-- SSM Parameters: `/eee/ent/{env}/{scope}/{key}`
-- KMS Key Alias: `alias/eee-ent-kms-{env}`
+- Secrets Manager (DB): `eee/ezs/db/core/{env}`
+- Secrets Manager (Auth0): `eee/ezs/auth0/{client}/{env}`
+- External API Secret: `eee/ezs/ext/{system}/{env}`
+- SSM Parameters: `/eee/ezs/{env}/{scope}/{key}`
+- KMS Key Alias: `alias/eee-ezs-kms-{env}`
 
 ---
 
 ## 9. Observability
 
-- Log Group (Router): `/eee/ent/router/{env}`
-- Log Group (Service): `/eee/ent/{svc}/{env}`
-- Trace Service: `eee-ent-{svc}-{env}`
-- Logs Bucket: `eee-ent-logs-{env}-{region}`
-- Dashboard: `eee-ent-dash-{env}`
-- Alarm: `eee-ent-{metric}-{svc}-{env}`
+- Log Group (Router): `/eee/ezs/router/{env}`
+- Log Group (Service): `/eee/ezs/{svc}/{env}`
+- Trace Service: `eee-ezs-{svc}-{env}`
+- Logs Bucket: `eee-ezs-logs-{env}-{region}`
+- Dashboard: `eee-ezs-dash-{env}`
+- Alarm: `eee-ezs-{metric}-{svc}-{env}`
 
 ---
 
@@ -129,16 +129,16 @@
     - `staging` → SIT
     - `main` → PRP
 - GitHub Environments: `UNT`, `DVT`, `SIT`, `PRP`
-- OIDC IAM Role: `eee-ent-gha-deploy-{env}`
+- OIDC IAM Role: `eee-ezs-gha-deploy-{env}`
 - SPA Artifact: `releases/{gitsha}`
-- Workflow File: `deploy-ent-{env}.yml`
+- Workflow File: `deploy-ezs-{env}.yml`
 
 ---
 
 ## 11. GraphQL Federation & APIs
 
-- Apollo Router Service ID: `ent-router-{env}`
-- Subgraph Name: `{context}@eee-ent-{context}-{env}`
+- Apollo Router Service ID: `ezs-router-{env}`
+- Subgraph Name: `{context}@eee-ezs-{context}-{env}`
 - GraphQL Path: `/graphql`
 - REST Base Path: `/v1/{resource}`
 
@@ -146,8 +146,8 @@
 
 ## 12. Auth0
 
-- SPA App: `EEE-ENT-SPA-{ENV}`
-- API App: `EEE-ENT-API-{ENV}`
+- SPA App: `EEE-EZS-SPA-{ENV}`
+- API App: `EEE-EZS-API-{ENV}`
 - Callback: `https://{env}.enterprized.elgineering.com/callback`
 - Allowed Origin: `https://{env}.enterprized.elgineering.com`
 - Claims Namespace: `https://elgineering.com/{claim}` (e.g. `/roles`)
@@ -159,9 +159,9 @@
 - `Environment` = `UNT` \| `DVT` \| `SIT` \| `PRP`
 - `Org` = `EEE`
 - `App` = `Enterprized`
-- `AppCode` = `ENT`
+- `AppCode` = `EZS`
 - `Owner` = `Elgineering`
-- `CostCenter` = `ENT-{ENV}`
+- `CostCenter` = `EZS-{ENV}`
 - `DataClass` = `Public` \| `Internal` \| `Confidential` \| `Restricted`
 - `Compliance` = `N/A` \| `SOX` \| `PCI` \| `HIPAA`
 - `GitRepo` = `github.com/Elgineering/EnterprizedSolutions`
@@ -173,26 +173,26 @@
 - **DVT**
     - SPA: `dvt.enterprized.elgineering.com`
     - API: `dvt.api.elgineering.com`
-    - ECS Cluster: `eee-ent-ecs-dvt-use1`
-    - RDS: `eee-ent-rds-core-dvt-use1`
-    - SPA Bucket: `eee-ent-spa-dvt-use1`
-    - Router Service: `eee-ent-svc-router-dvt`
+    - ECS Cluster: `eee-ezs-ecs-dvt-use2`
+    - RDS: `eee-ezs-rds-core-dvt-use2`
+    - SPA Bucket: `eee-ezs-spa-dvt-use2`
+    - Router Service: `eee-ezs-svc-router-dvt`
 
 - **SIT**
     - SPA: `sit.enterprized.elgineering.com`
     - API: `sit.api.elgineering.com`
-    - ECS Cluster: `eee-ent-ecs-sit-use1`
-    - RDS: `eee-ent-rds-core-sit-use1`
-    - SPA Bucket: `eee-ent-spa-sit-use1`
-    - Router Service: `eee-ent-svc-router-sit`
+    - ECS Cluster: `eee-ezs-ecs-sit-use2`
+    - RDS: `eee-ezs-rds-core-sit-use2`
+    - SPA Bucket: `eee-ezs-spa-sit-use2`
+    - Router Service: `eee-ezs-svc-router-sit`
 
 - **PRP**
     - SPA: `prp.enterprized.elgineering.com`
     - API: `prp.api.elgineering.com`
-    - ECS Cluster: `eee-ent-ecs-prp-use1`
-    - RDS: `eee-ent-rds-core-prp-use1`
-    - SPA Bucket: `eee-ent-spa-prp-use1`
-    - Router Service: `eee-ent-svc-router-prp`
+    - ECS Cluster: `eee-ezs-ecs-prp-use2`
+    - RDS: `eee-ezs-rds-core-prp-use2`
+    - SPA Bucket: `eee-ezs-spa-prp-use2`
+    - Router Service: `eee-ezs-svc-router-prp`
 
 ---
 
@@ -201,7 +201,7 @@
 1. Env first in DNS, env inside AWS resource names.
 2. Use lowercase with hyphens for AWS resource identifiers (S3, ECS, etc.).
 3. Use uppercase env for tags.
-4. Secrets and parameters always under `/eee/ent/{env}`.
+4. Secrets and parameters always under `/eee/ezs/{env}`.
 5. Don’t create public DNS for `UNT` (local only).
 
 ---
@@ -210,11 +210,11 @@
 
 ```hcl
 variable "org"    { default = "eee" }
-variable "app"    { default = "ent" }
+variable "app"    { default = "ezs" }
 variable "env"    { validation { condition = contains(["dvt","sit","prp"], var.env) error_message = "env must be dvt|sit|prp" } }
-variable "region" { default = "us-east-1" }
+variable "region" { default = "us-east-2" }
 locals {
-  region_code = "use1"
+  region_code = "use2"
 }
 ```
 SPA:
