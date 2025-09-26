@@ -1,0 +1,24 @@
+{
+  "name": "eee-outbox-publisher-unt",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Minimal outbox publisher for local UNT: reads Postgres outbox and publishes to Kafka and SQS (LocalStack)",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://example.com/eee/enterprizedsolutions.git"
+  },
+  "author": "Enterprized Solutions (eee)",
+  "engines": {
+    "node": ">=18.18.0"
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-sqs": "^3.645.0",
+    "kafkajs": "^2.2.4",
+    "pg": "^8.12.0"
+  }
+}
