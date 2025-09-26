@@ -27,7 +27,7 @@ What it starts:
 - Cache: Redis + Redis Commander UI
 - Messaging: Kafka (Redpanda) + Kafka UI
 - Lightweight AWS services: LocalStack (SQS/SNS)
-- Outbox Publisher: minimal NodeJS service publishing DB outbox events to Kafka and SQS
+- Outbox Publisher: minimal Node.js service publishing DB outbox events to Kafka and SQS
 
 Folder: infra/local/UNT
 - docker-compose.yml
@@ -52,7 +52,7 @@ Verify components
     psql postgresql://postgres:postgres@localhost:5432/eee_core_unt -c "\dn;" -c "\dt core.*"
 
 - Insert a sample outbox event (processed by the outbox-publisher):
-    psql postgresql://postgres:postgres@localhost:5432/eee_core_unt \
+    psql postgresql://postgres: postgres@localhost:5432/eee_core_unt \
       -c "INSERT INTO core.outbox (aggregate_type, aggregate_id, event_type, payload, idempotency_key) VALUES ('Order','order-123','OrderCreated','{\"orderId\":\"order-123\",\"amount\":42}','order-123-created');"
 
   Observe
